@@ -61,10 +61,8 @@ Environment:
 - Plotly bundles are large; expect Vite chunk warnings unless code-splitting is added.
 
 ## Demo Assets
-- Screen recording walkthrough:  
-  <video src="demo/demo.mov" controls width="640">
-    Your browser does not support the video tag. Download the file to view.
-  </video>
+- Screen recording walkthrough (download to view):  
+  [demo/demo.mov](demo/demo.mov)
 
 - Static capture of the dashboard:  
   ![Dashboard Screenshot](demo/screenshot.png)
