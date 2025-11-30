@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 
-from ..graphs.kpi_graph import build_kpi_graph
+from ..graphs.kpi_graph import create_kpi_graph
 from ..models.viz import VisualizationSpec
 
 router = APIRouter()
@@ -34,7 +34,7 @@ async def generate_kpi_dashboard(req: KPIRequest):
     }
     
     # Run the graph
-    app = build_kpi_graph()
+    app = create_kpi_graph()
     # ainvoke returns the final state
     final_state = await app.ainvoke(initial_state)
     

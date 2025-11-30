@@ -6,4 +6,8 @@ ollama
 pytest-asyncio
 langchain
 langgraph
+sqlmodel
+asyncpg
+chromadb
+sentence-transformers
 # Future dependencies: sqlalchemy, chromadb, pandas, plotly, etc.

@@ -12,7 +12,7 @@ import asyncio
 app = typer.Typer(name="metric-cli", help="MetricMind CLI Tool")
 console = Console()
 
-API_URL = "http://localhost:8000/kpi/"
+API_URL = "http://127.0.0.1:8000/kpi/"
 
 async def generate_dashboard(file_path: str, context: str):
     """

@@ -2,7 +2,15 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes_kpi import router as kpi_router
 
-app = FastAPI(title="MetricMind API")
+from app.core.db import init_db
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await init_db()
+    yield
+
+app = FastAPI(title="MetricMind API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
