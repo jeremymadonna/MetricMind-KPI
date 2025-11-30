@@ -60,6 +60,10 @@ Environment:
 - Update `frontend/src/app.module.ts` ServeStatic exclusions if API prefix changes.
 - Plotly bundles are large; expect Vite chunk warnings unless code-splitting is added.
 
+## Demo Assets
+- `Demo/Screen Recording 2025-11-30 at 16.35.51.mov` – walkthrough of the UI flow and generated dashboard.
+- `Demo/Screenshot 2025-11-30 at 16.35.11.png` – static capture of the dashboard state.
+
 ## Architecture (Mermaid)
 ```mermaid
 graph TD

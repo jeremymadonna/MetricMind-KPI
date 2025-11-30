@@ -11,6 +11,7 @@
     "client:preview": "vite preview --config client/vite.config.ts",
     "test": "cd client && vitest run",
     "test:watch": "cd client && vitest",
+    "lint": "eslint client/src --ext .ts,.tsx",
     "build": "npm run client:build && npm run build:server"
   },
   "dependencies": {
@@ -50,6 +51,11 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/user-event": "^14.6.1",
     "jsdom": "^25.0.0",
+    "eslint": "^9.13.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "eslint-plugin-react": "^7.36.1",
+    "eslint-plugin-react-hooks": "^5.0.0",
     "vitest": "^2.1.3"
   }
 }
