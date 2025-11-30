@@ -61,9 +61,9 @@ Environment:
 - Plotly bundles are large; expect Vite chunk warnings unless code-splitting is added.
 
 ## Demo Assets
-- Screen recording walkthrough (download/play locally): [demo.mov](Demo/demo.mov)
+- Screen recording walkthrough (download/play locally): [demo.mov](demo/demo.mov)
 - Static capture of the dashboard:  
-  ![Dashboard Screenshot](Demo/screenshot.png)
+  ![Dashboard Screenshot](demo/screenshot.png)
 
 ## Architecture (Mermaid)
 ```mermaid
