@@ -61,20 +61,20 @@ docker compose up --build
 ```mermaid
 graph TD
   subgraph Frontend [Frontend: Nest + Vite React]
-    UI[React + shadcn/ui<br>Plotly dashboards]
-    Demo[Live Demo Mode]
-    APIClient[Axios client]
+    UI["React + shadcn/ui + Plotly dashboards"]
+    Demo["Live Demo Mode"]
+    APIClient["Axios client"]
   end
 
   subgraph Backend [Backend: FastAPI + LangGraph]
-    API[/POST /kpi/]
-    Graph[LangGraph Pipeline]
-    Ingest[Ingestion: CSV parse + schema + summary]
-    KPI[KPI Extraction Agent<br>codellama:13b]
-    Viz[Visualization Agent<br>Plotly specs]
-    Narrative[Narrative Agent<br>llama3:8b]
-    Anomaly[Anomaly Detection<br>scikit-learn]
-    Persist[Persist: Postgres + Chroma]
+    API["POST /kpi"]
+    Graph["LangGraph pipeline"]
+    Ingest["Ingestion: CSV parse + schema + summary"]
+    KPI["KPI Extraction Agent (codellama:13b)"]
+    Viz["Visualization Agent (Plotly specs)"]
+    Narrative["Narrative Agent (llama3:8b)"]
+    Anomaly["Anomaly Detection (scikit-learn)"]
+    Persist["Persist: Postgres + Chroma"]
   end
 
   subgraph Storage [Persistence]
@@ -84,8 +84,8 @@ graph TD
   end
 
   subgraph LLMs [Models]
-    Ollama[Ollama host<br>codellama:13b<br>llama3:8b]
-    Claude[Claude 3.5 Sonnet (optional)]
+    OllamaHost["Ollama (codellama:13b, llama3:8b)"]
+    Claude["Claude 3.5 Sonnet (optional)"]
   end
 
   UI -->|call /kpi| API
@@ -98,9 +98,9 @@ graph TD
   Viz -->|Plotly specs| UI
   Narrative -->|text| UI
   KPI -->|validated KPIs| UI
-  KPI --> Ollama
-  Narrative --> Ollama
-  Ollama --> Claude
+  KPI --> OllamaHost
+  Narrative --> OllamaHost
+  OllamaHost --> Claude
   UI --> S3
 ```
 
