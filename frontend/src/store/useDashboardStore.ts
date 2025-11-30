@@ -23,7 +23,7 @@ interface DashboardState {
     narrative: string;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
-    fetchDashboard: (context: string) => Promise<void>;
+    fetchDashboard: (context: string, csvContent?: string) => Promise<void>;
 }
 
 export const useDashboardStore = create<DashboardState>((set) => ({
@@ -32,10 +32,10 @@ export const useDashboardStore = create<DashboardState>((set) => ({
     narrative: '',
     status: 'idle',
     error: null,
-    fetchDashboard: async (context) => {
+    fetchDashboard: async (context, csvContent) => {
         set({ status: 'loading', error: null });
         try {
-            const data = await generateDashboard(context);
+            const data = await generateDashboard(context, csvContent);
             set({
                 status: 'succeeded',
                 kpis: data.kpis,

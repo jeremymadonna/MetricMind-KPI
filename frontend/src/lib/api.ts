@@ -5,7 +5,7 @@ export const apiClient = axios.create({
     headers: { 'Content-Type': 'application/json' },
 });
 
-export const generateDashboard = async (context: string) => {
-    const response = await apiClient.post('/kpi/', { context });
+export const generateDashboard = async (context: string, csvContent?: string) => {
+    const response = await apiClient.post('/kpi/', { context, csv_content: csvContent });
     return response.data;
 };

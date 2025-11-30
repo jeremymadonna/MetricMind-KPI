@@ -11,13 +11,15 @@ class KPIExtractionAgent:
     def __init__(self, llm_client: LLMClient):
         self.llm = llm_client
 
-    async def run(self, schema: str, context: str = "") -> List[Dict]:
+    async def run(self, schema: str, context: str = "", data_summary: str = "") -> List[Dict]:
         prompt = f"You are a data analyst. Given the following DataFrame schema:\n{schema}\n"
+        if data_summary:
+            prompt += f"Data Summary (Statistics):\n{data_summary}\n"
         if context:
             prompt += f"Business context: {context}\n"
         prompt += (
             "Return a JSON array of KPI objects with the fields: name, description, "
-            "formula (as a Python expression using the column names), and display_format. "
+            "formula (as a Python expression using the column names), value (extract or estimate from summary if possible, else 'N/A'), and display_format. "
             "Only include KPIs that reference existing columns."
         )
         messages = [{"role": "user", "content": prompt}]

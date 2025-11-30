@@ -21,13 +21,39 @@ class KPIResponse(BaseModel):
 
 @router.post("/", response_model=KPIResponse)
 async def generate_kpi_dashboard(req: KPIRequest):
-    # Mock schema for demonstration
-    mock_schema = "column1: int, column2: float, revenue: float"
+    # Parse CSV content
+    schema_str = "N/A"
+    data_summary = "N/A"
+    sample_data = []
     
+    if req.csv_content:
+        try:
+            import pandas as pd
+            import io
+            
+            df = pd.read_csv(io.StringIO(req.csv_content))
+            
+            # Generate schema string
+            buffer = io.StringIO()
+            df.info(buf=buffer)
+            schema_str = buffer.getvalue()
+            
+            # Generate data summary
+            data_summary = df.describe().to_string()
+            
+            # Get sample data (up to 100 rows for anomaly detection)
+            sample_data = df.head(100).to_dict(orient="records")
+            
+        except Exception as e:
+            print(f"Error parsing CSV: {e}")
+            schema_str = f"Error parsing CSV: {e}"
+
     # Initialize graph input state
     initial_state = {
         "context": req.context or "",
-        "schema": mock_schema,
+        "schema": schema_str,
+        "data_summary": data_summary,
+        "sample_data": sample_data,
         "kpis": [],
         "visualizations": [],
         "narrative": ""

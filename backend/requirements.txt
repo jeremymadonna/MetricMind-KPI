@@ -10,4 +10,5 @@ sqlmodel
 asyncpg
 chromadb
 sentence-transformers
-# Future dependencies: sqlalchemy, chromadb, pandas, plotly, etc.
+scikit-learn
+pandas

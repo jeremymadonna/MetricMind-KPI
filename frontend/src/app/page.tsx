@@ -9,12 +9,19 @@ import { BarChart3, Search } from 'lucide-react';
 
 export default function Home() {
   const [context, setContext] = useState('');
+  const [file, setFile] = useState<File | null>(null);
   const { fetchDashboard, status } = useDashboardStore();
 
-  const handleGenerate = (e: React.FormEvent) => {
+  const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (context.trim()) {
-      fetchDashboard(context);
+      let csvContent = undefined;
+
+      if (file) {
+        csvContent = await file.text();
+      }
+
+      fetchDashboard(context, csvContent);
     }
   };
 
@@ -31,21 +38,30 @@ export default function Home() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Input Section */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-          <form onSubmit={handleGenerate} className="flex gap-4">
-            <div className="flex-1 relative">
-              <label htmlFor="context" className="sr-only">Business Context</label>
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <Input
-                id="context"
-                className="pl-10"
-                placeholder="Describe your business context (e.g., 'SaaS startup tracking monthly recurring revenue and churn')"
-                value={context}
-                onChange={(e) => setContext(e.target.value)}
-              />
+          <form onSubmit={handleGenerate} className="flex flex-col gap-4">
+            <div className="flex gap-4">
+              <div className="flex-1 relative">
+                <label htmlFor="context" className="sr-only">Business Context</label>
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Input
+                  id="context"
+                  className="pl-10"
+                  placeholder="Describe your business context (e.g., 'SaaS startup tracking monthly recurring revenue')"
+                  value={context}
+                  onChange={(e) => setContext(e.target.value)}
+                />
+              </div>
+              <div className="w-1/3">
+                <Input
+                  type="file"
+                  accept=".csv"
+                  onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
+                />
+              </div>
+              <Button type="submit" disabled={status === 'loading'}>
+                {status === 'loading' ? 'Generating...' : 'Generate Dashboard'}
+              </Button>
             </div>
-            <Button type="submit" disabled={status === 'loading'}>
-              {status === 'loading' ? 'Generating...' : 'Generate Dashboard'}
-            </Button>
           </form>
         </div>
 

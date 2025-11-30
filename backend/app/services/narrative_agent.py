@@ -7,10 +7,11 @@ class NarrativeAgent:
     def __init__(self, llm_client: LLMClient):
         self.llm = llm_client
 
-    async def run(self, kpis: list, context: str) -> str:
+    async def run(self, kpis: list, context: str, anomalies: list = None) -> str:
+        anomalies_text = f"\nAnomalies Detected: {anomalies}" if anomalies else ""
         prompt = (
             f"Context: {context}\n"
-            f"KPI Data: {kpis}\n"
+            f"KPI Data: {kpis}{anomalies_text}\n"
             "Write a concise executive summary (1 paragraph) analyzing these KPIs."
         )
         messages = [{"role": "user", "content": prompt}]
