@@ -7,8 +7,8 @@ import { AppController } from './app.controller';
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client', 'dist'),
-      // String pattern that avoids path-to-regexp crash while excluding API routes
-      exclude: ['/api(?:/.*)?'],
+      // Exclude API routes from static serving (compatible with path-to-regexp)
+      exclude: ['/api', '/api/(.*)'],
     }),
   ],
   controllers: [AppController],
