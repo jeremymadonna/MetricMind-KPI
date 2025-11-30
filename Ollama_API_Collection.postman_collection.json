@@ -1,0 +1,363 @@
+{
+	"info": {
+		"_postman_id": "ollama-api-collection",
+		"name": "Ollama API Collection",
+		"description": "Complete collection of Ollama API endpoints for https://ollama.linux-box/",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://ollama.linux-box",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Generation",
+			"item": [
+				{
+					"name": "Generate Completion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"model\": \"llama2\",\n  \"prompt\": \"Why is the sky blue?\",\n  \"stream\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/generate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"generate"
+							]
+						},
+						"description": "Generate a response for a given prompt with a provided model. This is a streaming endpoint, so there will be a series of responses."
+					}
+				},
+				{
+					"name": "Generate Chat Completion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"model\": \"llama2\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Why is the sky blue?\"\n    }\n  ],\n  \"stream\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/chat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"chat"
+							]
+						},
+						"description": "Generate the next message in a chat with a provided model. This is a streaming endpoint."
+					}
+				},
+				{
+					"name": "Generate Embeddings",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"model\": \"llama2\",\n  \"prompt\": \"Here is an article about llamas...\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/embeddings",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"embeddings"
+							]
+						},
+						"description": "Generate embeddings from a model for a given text input."
+					}
+				}
+			]
+		},
+		{
+			"name": "Model Management",
+			"item": [
+				{
+					"name": "List Local Models",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/tags",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"tags"
+							]
+						},
+						"description": "List models that are available locally."
+					}
+				},
+				{
+					"name": "Show Model Information",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"llama2\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/show",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"show"
+							]
+						},
+						"description": "Show information about a model including details, modelfile, template, parameters, license, and system prompt."
+					}
+				},
+				{
+					"name": "Copy Model",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"source\": \"llama2\",\n  \"destination\": \"llama2-backup\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/copy",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"copy"
+							]
+						},
+						"description": "Copy a model. Creates a model with another name from an existing model."
+					}
+				},
+				{
+					"name": "Delete Model",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"llama2\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/delete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"delete"
+							]
+						},
+						"description": "Delete a model and its data."
+					}
+				},
+				{
+					"name": "Pull Model",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"llama2\",\n  \"stream\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pull",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"pull"
+							]
+						},
+						"description": "Download a model from the ollama library. Cancelled pulls are resumed from where they left off."
+					}
+				},
+				{
+					"name": "Push Model",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"mymodel\",\n  \"stream\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/push",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"push"
+							]
+						},
+						"description": "Upload a model to a model library. Requires registering for ollama.ai and adding a public key first."
+					}
+				},
+				{
+					"name": "Create Model",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"custom-model\",\n  \"modelfile\": \"FROM llama2\\nSYSTEM You are a helpful assistant.\",\n  \"stream\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"create"
+							]
+						},
+						"description": "Create a model from a Modelfile. This is a streaming endpoint."
+					}
+				}
+			]
+		},
+		{
+			"name": "Blob Management",
+			"item": [
+				{
+					"name": "Check Blob Exists",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/blobs/sha256:digest_value",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"blobs",
+								"sha256:digest_value"
+							]
+						},
+						"description": "Ensures that the file blob used for a FROM or ADAPTER field exists on the server. Returns 200 OK if the blob exists."
+					}
+				},
+				{
+					"name": "Create Blob",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/octet-stream"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/api/blobs/sha256:digest_value",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"blobs",
+								"sha256:digest_value"
+							]
+						},
+						"description": "Create a blob from a file. Returns 201 Created if the blob was successfully created."
+					}
+				}
+			]
+		},
+		{
+			"name": "Running Models",
+			"item": [
+				{
+					"name": "List Running Models",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/ps",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ps"
+							]
+						},
+						"description": "List models that are currently loaded into memory."
+					}
+				}
+			]
+		}
+	]
+}

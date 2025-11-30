@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+pydantic
+httpx
+ollama
+pytest-asyncio
+langchain
+langgraph
+# Future dependencies: sqlalchemy, chromadb, pandas, plotly, etc.
