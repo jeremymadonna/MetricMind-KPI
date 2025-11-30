@@ -44,6 +44,9 @@ Docker Compose:
 docker compose up --build
 ```
 
+Environment:
+- Frontend expects `VITE_API_BASE` (defaults to `http://localhost:8000`); docker-compose sets it to `http://backend:8000`.
+
 ## Key Flows
 - `/kpi` POST accepts context + CSV content or URL, runs LangGraph pipeline, returns KPIs, Plotly specs, and narrative.
 - Visualization agent maps schema/numerics to charts; narrative agent summarizes trends; results are persisted to Postgres and vectorized to Chroma.
