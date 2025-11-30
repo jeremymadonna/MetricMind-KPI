@@ -15,6 +15,9 @@ type VisualizationSpec = {
 
 type KpiItem = { name: string; value?: number | string; display_format?: string; description?: string };
 
+/**
+ * Builds a simple bar chart from available KPI values to ensure we render something when no plotly data arrives.
+ */
 const buildFallbackPlot = (kpis: KpiItem[]) => {
     const numericKpis = kpis
         .map((kpi) => ({
@@ -40,6 +43,9 @@ const buildFallbackPlot = (kpis: KpiItem[]) => {
     };
 };
 
+/**
+ * Normalizes visualization payloads (including serialized JSON) into a Plotly-ready object.
+ */
 const normalizePlot = (viz: VisualizationSpec, kpis: KpiItem[]) => {
     let cfg: any = viz?.plotly_config;
 
@@ -66,6 +72,9 @@ const normalizePlot = (viz: VisualizationSpec, kpis: KpiItem[]) => {
     return buildFallbackPlot(kpis);
 };
 
+/**
+ * Formats KPI values with two-decimal rounding and display hints (currency/percent).
+ */
 const formatValue = (value: KpiItem['value'], display: string | undefined) => {
     if (value === null || value === undefined) return 'N/A';
     if (typeof value === 'number') {

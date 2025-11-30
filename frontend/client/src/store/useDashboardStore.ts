@@ -27,12 +27,24 @@ interface DashboardState {
     loadDemoDashboard: () => void;
 }
 
+/**
+ * Global dashboard store for KPI data, visualizations, and narratives.
+ *
+ * Returns Zustand store handlers to fetch dashboards from the API or load a demo snapshot.
+ */
 export const useDashboardStore = create<DashboardState>((set) => ({
     kpis: [],
     visualizations: [],
     narrative: '',
     status: 'idle',
     error: null,
+    /**
+     * Fetches a dashboard from the backend using provided context and optional CSV content.
+     *
+     * Args:
+     *   context: Business context to guide KPI extraction.
+     *   csvContent: Optional CSV data for pipeline ingestion.
+     */
     fetchDashboard: async (context, csvContent) => {
         set({ status: 'loading', error: null });
         try {
@@ -47,6 +59,9 @@ export const useDashboardStore = create<DashboardState>((set) => ({
             set({ status: 'failed', error: error.message || 'Failed to fetch dashboard' });
         }
     },
+    /**
+     * Loads a demo dashboard locally to showcase KPIs, charts, and narrative without API calls.
+     */
     loadDemoDashboard: () => {
         const demoKpis: KPI[] = [
             {

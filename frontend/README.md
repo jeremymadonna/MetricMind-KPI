@@ -27,6 +27,9 @@ npm run start           # serves dist/main.js, static from client/dist
 Env:
 - `VITE_API_BASE` (defaults to http://localhost:8000) controls API calls from the client.
 
+Testing:
+- `npm test` (runs Vitest from `client/`)
+
 ## Key paths
 - `client/src/App.tsx` – landing, generator form, hero, live demo wiring
 - `client/src/components/dashboard-view.tsx` – KPI cards, Plotly charts, narrative

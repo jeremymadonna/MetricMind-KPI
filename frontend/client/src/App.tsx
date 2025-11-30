@@ -17,11 +17,22 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useDashboardStore } from '@/store/useDashboardStore';
 
+/**
+ * Main application shell with hero, generator form, and live dashboard preview.
+ *
+ * Handles CSV upload/context submission to the backend or triggers a local demo.
+ */
 function App() {
   const [context, setContext] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const { fetchDashboard, loadDemoDashboard, status } = useDashboardStore();
 
+  /**
+   * Submits the business context and optional CSV to the backend pipeline.
+   *
+   * Args:
+   *   e: Form submission event.
+   */
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!context.trim()) return;

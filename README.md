@@ -54,7 +54,7 @@ Environment:
 
 ## Testing
 - Backend: `pytest tests`
-- Frontend: `npm test` (from `frontend/`, if configured)
+- Frontend: `npm test` (from `frontend/`; Vitest + Testing Library)
 
 ## Notes
 - Update `frontend/src/app.module.ts` ServeStatic exclusions if API prefix changes.
