@@ -1,13 +1,18 @@
 import json
+import logging
 from typing import List, Dict
 
 from .llm_client import LLMClient
+
+logger = logging.getLogger(__name__)
+
 
 class KPIExtractionAgent:
     """Agent that extracts KPI definitions from a DataFrame schema using an LLM.
     The `schema` argument is a string representation of column names and types.
     Returns a list of KPI dicts with keys: name, description, formula, display_format.
     """
+
     def __init__(self, llm_client: LLMClient):
         self.llm = llm_client
 
@@ -24,13 +29,17 @@ class KPIExtractionAgent:
         )
         messages = [{"role": "user", "content": prompt}]
         response = await self.llm.chat(messages)
-        
-        # Clean up markdown code blocks if present
+
         cleaned_response = response.strip()
         if cleaned_response.startswith("```"):
-            cleaned_response = cleaned_response.split("```")[1]
+            cleaned_response = cleaned_response.split("```", 2)[1]
             if cleaned_response.startswith("json"):
                 cleaned_response = cleaned_response[4:]
         cleaned_response = cleaned_response.strip()
-        
-        return json.loads(cleaned_response)
+
+        try:
+            return json.loads(cleaned_response)
+        except json.JSONDecodeError:
+            logger.error("Failed to parse KPI LLM response as JSON: %s", cleaned_response[:500])
+            # Graceful fallback to avoid 500s when the model returns malformed output.
+            return []

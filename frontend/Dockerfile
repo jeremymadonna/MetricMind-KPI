@@ -6,26 +6,26 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci
 
-# Copy source code
+# Copy source
 COPY . .
 
-# Build the application
-RUN npm run build
+# Build client (Vite) and Nest server
+RUN npm run client:build && npm run build:server
 
-# Production image
 FROM node:20-alpine AS runner
 
 WORKDIR /app
-
 ENV NODE_ENV=production
+ENV PORT=3000
 
-# Copy built assets from builder
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
+# Install prod dependencies only
+COPY package.json package-lock.json* ./
+RUN npm ci --omit=dev
 
-# Expose port
+# Copy build outputs
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/client/dist ./client/dist
+
 EXPOSE 3000
 
-# Run the application
-CMD ["node", "server.js"]
+CMD ["node", "dist/main.js"]

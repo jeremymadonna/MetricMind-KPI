@@ -26,7 +26,7 @@ async def node_extract_kpis(state: GraphState):
 
 def node_visualize(state: GraphState):
     agent = VisualizationAgent()
-    specs = agent.run(state["kpis"], state["schema"])
+    specs = agent.run(state["kpis"], state["schema"], state.get("sample_data", []))
     return {"visualizations": specs}
 
 from ..services.anomaly_service import AnomalyService
@@ -71,23 +71,26 @@ from app.core.db import engine, init_db
 from app.models.dashboard import Dashboard
 from app.services.rag_service import RAGService
 from sqlalchemy.ext.asyncio import AsyncSession
+from pydantic.json import pydantic_encoder
+import json
 
 async def node_persist(state: GraphState):
     # 1. Save to Database (Postgres/SQLite)
     # We need to create a session manually here since we are outside the request context
     # In a real app, we might pass the session in the state, but for now:
     async with AsyncSession(engine) as session:
+        safe_visualizations = json.loads(json.dumps(state["visualizations"], default=pydantic_encoder))
         dashboard = Dashboard(
             context=state["context"],
             data={
                 "kpis": state["kpis"],
-                "visualizations": state["visualizations"],
-                "narrative": state["narrative"]
-            }
+                "visualizations": safe_visualizations,
+                "narrative": state["narrative"],
+            },
         )
         session.add(dashboard)
-        session.commit()
-        session.refresh(dashboard)
+        await session.commit()
+        await session.refresh(dashboard)
         dashboard_id = dashboard.id
 
     # 2. Save to RAG (Chroma)
