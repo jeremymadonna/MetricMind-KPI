@@ -1,0 +1,7 @@
+{
+  "name": "metricmind-root",
+  "private": true,
+  "scripts": {
+    "lint": "cd frontend && npm run lint"
+  }
+}

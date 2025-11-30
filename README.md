@@ -61,8 +61,13 @@ Environment:
 - Plotly bundles are large; expect Vite chunk warnings unless code-splitting is added.
 
 ## Demo Assets
-- `Demo/Screen Recording 2025-11-30 at 16.35.51.mov` – walkthrough of the UI flow and generated dashboard.
-- `Demo/Screenshot 2025-11-30 at 16.35.11.png` – static capture of the dashboard state.
+- Screen recording walkthrough:
+
+https://github.com/your-org/your-repo/raw/main/Demo/Screen%20Recording%202025-11-30%20at%2016.35.51.mov
+
+- Static capture of the dashboard:
+
+![Dashboard Screenshot](Demo/Screenshot%202025-11-30%20at%2016.35.11.png)
 
 ## Architecture (Mermaid)
 ```mermaid
