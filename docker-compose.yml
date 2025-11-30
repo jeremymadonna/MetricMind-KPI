@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_BASE_URL=https://ollama.linux-box
+      - OLLAMA_MODEL=qwen2.5-coder:3b
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/metricmind
+      - CHROMA_PATH=/app/chroma_db
+    depends_on:
+      - db
+    networks:
+      - metricmind-net
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - metricmind-net
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=metricmind
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - metricmind-net
+
+networks:
+  metricmind-net:
+    driver: bridge
+
+volumes:
+  postgres_data:

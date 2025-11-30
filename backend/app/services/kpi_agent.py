@@ -22,5 +22,13 @@ class KPIExtractionAgent:
         )
         messages = [{"role": "user", "content": prompt}]
         response = await self.llm.chat(messages)
-        # Expect the LLM to return valid JSON
-        return json.loads(response)
+        
+        # Clean up markdown code blocks if present
+        cleaned_response = response.strip()
+        if cleaned_response.startswith("```"):
+            cleaned_response = cleaned_response.split("```")[1]
+            if cleaned_response.startswith("json"):
+                cleaned_response = cleaned_response[4:]
+        cleaned_response = cleaned_response.strip()
+        
+        return json.loads(cleaned_response)

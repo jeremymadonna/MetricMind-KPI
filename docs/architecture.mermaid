@@ -1,0 +1,23 @@
+graph TD
+    User[User] -->|Interacts| Frontend[Next.js Frontend]
+    User -->|CLI Commands| CLI[CLI Tool]
+    
+    Frontend -->|HTTP Requests| Backend[FastAPI Backend]
+    CLI -->|HTTP Requests| Backend
+    
+    subgraph Backend Services
+        Backend -->|Orchestrates| Graph[LangGraph Workflow]
+        Graph -->|Extracts KPIs| KPIAgent[KPI Extraction Agent]
+        Graph -->|Generates Charts| VizAgent[Visualization Agent]
+        Graph -->|Writes Summary| NarrativeAgent[Narrative Agent]
+    end
+    
+    subgraph AI Layer
+        KPIAgent -->|Prompts| LLM1[Ollama (qwen2.5-coder:3b)]
+        NarrativeAgent -->|Prompts| LLM2[Ollama (llama3.2:3b)]
+    end
+    
+    subgraph Data Persistence
+        Backend -->|Stores Metadata| Postgres[(PostgreSQL)]
+        Backend -->|Stores Embeddings| Chroma[(ChromaDB)]
+    end

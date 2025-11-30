@@ -15,8 +15,8 @@ class GraphState(TypedDict):
     narrative: str
 
 async def node_extract_kpis(state: GraphState):
-    # In a real scenario, we might inject the client or config
-    llm_client = LLMClient(model="codellama:13b")
+    # Using qwen2.5-coder:3b for KPI extraction (code generation capabilities)
+    llm_client = LLMClient(model="qwen2.5-coder:3b")
     agent = KPIExtractionAgent(llm_client)
     kpis = await agent.run(state["schema"], state["context"])
     return {"kpis": kpis}
@@ -27,7 +27,8 @@ def node_visualize(state: GraphState):
     return {"visualizations": specs}
 
 async def node_narrate(state: GraphState):
-    llm_client = LLMClient(model="llama3:8b")
+    # Using llama3.2:3b for narrative generation
+    llm_client = LLMClient(model="llama3.2:3b")
     agent = NarrativeAgent(llm_client)
     narrative = await agent.run(state["kpis"], state["context"])
     return {"narrative": narrative}
