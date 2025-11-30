@@ -121,3 +121,7 @@ def create_kpi_graph():
     workflow.add_edge("persist", END)
     
     return workflow.compile()
+
+# Backwards-compatible alias for tests expecting build_kpi_graph
+def build_kpi_graph():
+    return create_kpi_graph()

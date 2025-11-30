@@ -8,6 +8,7 @@ langchain
 langgraph
 sqlmodel
 asyncpg
+aiosqlite
 chromadb
 sentence-transformers
 scikit-learn
